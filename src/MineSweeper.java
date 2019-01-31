@@ -10,19 +10,28 @@ public class MineSweeper extends JPanel {
 
     public static final int SIZE = 30;
 
+    public int numbBombs = 20;
+
     public MineSweeper(int width, int height) {
         setSize(width, height);
 
         board = new Square[15][15];
-        for (int i = 0; i < board.length; i++)
-            for (int j = 0; j < board[0].length; j++) {
-                //you should modify this so a set number of mines are placed, not
-                //a random number of mines.
-                if(Math.random() < .2)
-                    board[i][j] = new Square(true, i, j, board);
-                else
-                    board[i][j] = new Square(false, i, j, board);
+        int currentNumBombs = 0;
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                board[i][j] = new Square(false, i, j, board);
+
             }
+        }
+        while (currentNumBombs <= numbBombs) {
+            int x = (int) (Math.random() * 15);
+            int y = (int) (Math.random() * 15);
+            board[x][y] = new Square(true, x, y, board);
+
+
+        }
+
+
 
         //Here is a good spot to calc each Square's neighborMines
         //Maybe write a method in Square that finds how many
@@ -44,7 +53,7 @@ public class MineSweeper extends JPanel {
     }
 
 
-    public void setupMouseListener(){
+    public void setupMouseListener() {
         addMouseListener(new MouseListener() {
             @Override
             public void mousePressed(MouseEvent e) {
