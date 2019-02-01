@@ -43,14 +43,37 @@ public class Square {
         g2.setColor(Color.BLACK);
         g2.drawRect(c * size, r * size, size, size);
         if(isRevealed && !isMine) {
-            String x = String.valueOf(neighborMines)
+            String x = String.valueOf(neighborMines);
             if (neighborMines == 1){
-                g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-                g2.drawString(x, c * size+10, r * size+20);
+                g2.setColor(Color.BLUE);
             }
             else if (neighborMines == 2){
-                
+                g2.setColor(Color.GREEN);
             }
+            else if (neighborMines == 3){
+                g2.setColor(Color.RED);
+            }
+            else if (neighborMines == 4){
+                g2.setColor(new Color(113, 0, 192));
+
+            }
+            else if (neighborMines == 5){
+                g2.setColor(new Color(146, 0, 34));
+            }
+            else if (neighborMines == 6){
+                g2.setColor(new Color(28, 138, 142));
+
+            }
+            else if (neighborMines == 7){
+                g2.setColor(new Color(0, 0, 0));
+
+            }
+            else if (neighborMines == 8){
+                g2.setColor(Color.darkGray);
+
+            }
+            g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+            g2.drawString(x, c * size+10, r * size+20);
 
         }
     }
