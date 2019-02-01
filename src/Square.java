@@ -13,56 +13,58 @@ public class Square {
         this.c = c;
         this.isRevealed = false;
 
-        neighborMines = 0;  //you'll want to code this properly.
-                            //probably a numNeighbors method - probably similar to Life...
+        neighborMines = 0;
     }
 
-    public void draw(Graphics2D g2){
+
+
+    public int getNeighborMines() {
+        return neighborMines;
+    }
+
+    public void setNeighborMines(int neighborMines) {
+        this.neighborMines = neighborMines;
+    }
+
+
+    public void draw(Graphics2D g2) {
         int size = MineSweeper.SIZE;
         if (isRevealed) {
-            if(isMine) {
+            if (isMine) {
                 g2.setColor(Color.RED);
-            }else{
-                g2.setColor(Color.BLACK);
+            } else {
+                g2.setColor(Color.lightGray);
             }
             g2.fillRect(c * size, r * size, size, size);
-        }else{
+        } else {
             g2.setColor(Color.GRAY);
             g2.fillRect(c * size, r * size, size, size);
         }
         g2.setColor(Color.BLACK);
         g2.drawRect(c * size, r * size, size, size);
+        if(isRevealed && !isMine) {
+            String x = String.valueOf(neighborMines)
+            if (neighborMines == 1){
+                g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+                g2.drawString(x, c * size+10, r * size+20);
+            }
+            else if (neighborMines == 2){
+                
+            }
 
+        }
     }
 
-    public void click(){
+    public void click() {
         isRevealed = true;
     }
 
-    public boolean getIsAlive(){
-      return isMine;
+    public boolean getIsMine() {
+        return isMine;
     }
 
-    public int numNeighbors(Square[][] squares) {
 
-            int num = 0;
-            for (int i = r - 1; i <= r + 1; i++) {
-                for (int j = c - 1; j <= c + 1; j++) {
-                    if (i >= 0 && i <= 15-1) {
-                        if (j >= 0 && j <= 15-1) {
-                            if (squares[i][j].getIsAlive()) {
-                                num += 1;
-                            }
-                        }
-                    }
-                }
-            }
-            if (squares[r][c].getIsAlive()) {
-                num -= 1;
-            }
 
-            neighborMines = num;
-            return num;
 
-        }
-}
+    }
+

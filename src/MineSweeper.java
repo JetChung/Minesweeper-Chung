@@ -11,31 +11,65 @@ public class MineSweeper extends JPanel {
     public static final int SIZE = 30;
 
     public int numbBombs = 20;
+    public int maxR = 15;
+    public int maxC = 15;
 
     public MineSweeper(int width, int height) {
         setSize(width, height);
 
-        board = new Square[15][15];
+        board = new Square[maxR][maxC];
         int currentNumBombs = 0;
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 15; j++) {
+        for (int i = 0; i < maxR; i++) {
+            for (int j = 0; j < maxC; j++) {
                 board[i][j] = new Square(false, i, j, board);
 
             }
         }
-        while (currentNumBombs <= numbBombs) {
-            int x = (int) (Math.random() * 15);
-            int y = (int) (Math.random() * 15);
-            board[x][y] = new Square(true, x, y, board);
 
+        while (currentNumBombs <= numbBombs) {
+            int x = (int) (Math.random() * maxR);
+            int y = (int) (Math.random() * maxC);
+            if (!board[x][y].getIsMine()){
+                board[x][y] = new Square(true, x, y, board);
+                currentNumBombs++;
+
+            }
 
         }
+
 
 
 
         //Here is a good spot to calc each Square's neighborMines
         //Maybe write a method in Square that finds how many
         //mines are around it, and call that method on each Square here.
+
+
+
+        int[][] numNeighbors = new int[maxR][maxC];
+
+        for (int rowOfCell = 0; rowOfCell < maxR; rowOfCell++) {
+            for (int colOfCell = 0; colOfCell < maxC; colOfCell++) {
+                int num = 0;
+                for (int i = rowOfCell-1; i <= rowOfCell + 1; i++) {
+                    for (int j = colOfCell - 1; j <= colOfCell + 1; j++) {
+                        if (i >= 0 && i < maxR)  {
+                            if (j >= 0 && j < maxC) {
+                                if (board[i][j].getIsMine()) {
+                                    num += 1;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (board[rowOfCell][colOfCell].getIsMine()) {
+                    num -= 1;
+                }
+                numNeighbors[rowOfCell][colOfCell] = num;
+                board[rowOfCell][colOfCell].setNeighborMines(num);
+            }
+        }
+
 
 
         setupMouseListener();
